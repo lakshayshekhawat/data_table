@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		.modal-form{
+			padding: 20px;
+			text-align: center;
+		}
+	6
+	</style>
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+</head>
+<body>
+	<!-- table for initial data -->
+	<table id="table_id" class="display">
+		<thead>
+			<tr>
+				<th>Serial No</th>
+				<th>Name</th>
+				<th>Marks</th>
+				<th> Roll No </th>
+				<th> Action </th>
+			</tr>
+		</thead>
+		<tbody class="table-body">
+			<tr data-val="1">
+				<td>1</td>
+				<td>Lakshay</td>
+				<td> 91 </td>
+				<td> 14ucs24 </td>
+				<td>
+					<button class="btn btn-success" data-toggle="modal" data-target="#myModal">Edit</button>
+					<button class="btn btn-danger">Delete</button>
+				</td>
+			</tr>
+			<tr data-val="2">
+				<td>2</td>
+				<td>shobhit</td>
+				<td> 21 </td>
+				<td> 14ucs12 </td>
+				<td>
+					<button class="btn btn-success" data-toggle="modal" data-target="#myModal">Edit</button>
+					<button class="btn btn-danger">Delete</button>
+				</td>
+			</tr>
+			<tr data-val="3">
+				<td>3</td>
+				<td>Vineet</td>
+				<td> 84 </td>
+				<td> 14uec12 </td>
+				<td>
+					<button class="btn btn-success" data-toggle="modal" data-target="#myModal">Edit</button>
+					<button class="btn btn-danger">Delete</button>
+				</td>
+			</tr>
+			<tr data-val="4">
+				<td>4</td>
+				<td>Arun</td>
+				<td> 45 </td>
+				<td> 14umm21 </td>
+				<td>
+					<button class="btn btn-success" data-toggle="modal" data-target="#myModal">Edit</button>
+					<button class="btn btn-danger">Delete</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<!--table ends -->
+	<!-- Modal starts -->
+	<div id="myModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="row">
+					<div class="col-md-12 modal-form">
+						<!-- form for editing the data -->
+						<form class="edit-form">
+							<div class="col-md-6">
+								<label for="name">Name</label>
+							</div>
+							<div class="col-md-6">
+								<input type="text" name="name" id="name_input" required/>
+							</div>
+
+							<div class="col-md-6">
+								<label for="marks">Marks</label>
+							</div>
+							<div class="col-md-6">
+								<input type="text" name="marks" id="marks_input" required/>
+							</div>
+							<div class="col-md-6">
+								<label for="roll">Roll Number</label>
+							</div>
+							<div class="col-md-6">
+								<input type="text" name="roll" id="roll_input" required/>
+							</div>
+							<button type="submit" class="btn btn-default">Save</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal ends -->
+	<script>
+	$(document).ready(function() {
+		var attr;  // to store the data attribute
+		$('#table_id').DataTable();
+		$(".btn-success").on("click",function(){
+		 	attr = $(this).parent().closest('tr').attr('data-val'); // getting the attribute
+		});
+		$(".btn-danger").on("click",function(){
+			console.log($(this).parent().closest('tr').attr('data-val'));
+			$(this).parent().closest('tr').remove(); // removing row
+		});
+		$(".edit-form").submit(function(e){
+			e.preventDefault();
+			$('.table-body').find('[data-val='+attr+'] td').eq(1).text($("#name_input").val()); // setting the value
+			$('.table-body').find('[data-val='+attr+'] td').eq(2).text($("#marks_input").val());
+			$('.table-body').find('[data-val='+attr+'] td').eq(3).text($("#roll_input").val());
+			e.target.reset();
+		});
+	});
+
+	</script>
+</body>
+</html>

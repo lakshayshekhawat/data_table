@@ -29,7 +29,7 @@
 		</thead>
 		<tbody class="table-body">
 			<tr data-val="1">
-				<td>1</td>
+				<td></td>
 				<td>Lakshay</td>
 				<td> 91 </td>
 				<td> 14ucs24 </td>
@@ -39,7 +39,7 @@
 				</td>
 			</tr>
 			<tr data-val="2">
-				<td>2</td>
+				<td></td>
 				<td>shobhit</td>
 				<td> 21 </td>
 				<td> 14ucs12 </td>
@@ -49,7 +49,7 @@
 				</td>
 			</tr>
 			<tr data-val="3">
-				<td>3</td>
+				<td></td>
 				<td>Vineet</td>
 				<td> 84 </td>
 				<td> 14uec12 </td>
@@ -59,7 +59,7 @@
 				</td>
 			</tr>
 			<tr data-val="4">
-				<td>4</td>
+				<td></td>
 				<td>Arun</td>
 				<td> 45 </td>
 				<td> 14umm21 </td>
@@ -110,13 +110,29 @@
 	<script>
 	$(document).ready(function() {
 		var attr;  // to store the data attribute
-		$('#table_id').DataTable();
+
+		var t = $('#table_id').DataTable( {
+			 "columnDefs": [ {
+				 "searchable": false,
+				 "orderable": true,
+				 "targets": 0
+			 } ],
+			 "order": [[ 1, 'asc' ]]
+		 } );
+		 t.on( 'order.dt search.dt', function () {
+			   t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+				   cell.innerHTML = i+1;
+			   } );
+		   } ).draw();
+		// $('#table_id').DataTable();
 		$(".btn-success").on("click",function(){
 		 	attr = $(this).parent().closest('tr').attr('data-val'); // getting the attribute
 		});
 		$(".btn-danger").on("click",function(){
-			console.log($(this).parent().closest('tr').attr('data-val'));
-			$(this).parent().closest('tr').remove(); // removing row
+			// $(this).parent().closest('tr').remove(); // removing row
+			var row = $(this).parent().closest('tr');
+			t.row(row).remove().draw(false);
+			insert_serial();
 		});
 		$(".edit-form").submit(function(e){
 			e.preventDefault();
@@ -125,7 +141,18 @@
 			$('.table-body').find('[data-val='+attr+'] td').eq(3).text($("#roll_input").val());
 			e.target.reset();
 		});
+		var insert_serial = function(){
+			var len = $("#table_id tr").length;
+			// $("#table_id tr").each(function(i,ele){
+			// 	console.log(ele);
+			// });
+			// for( var i=0; i<len ; i++){
+			// 	console.log($("#table tr")[i].html());
+			// }
+			console.log($("#table tr"));
+		};
 	});
+
 
 	</script>
 </body>

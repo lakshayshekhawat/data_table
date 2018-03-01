@@ -113,7 +113,7 @@
 
 		var t = $('#table_id').DataTable( {
 			 "columnDefs": [ {
-				 "searchable": false,
+				 "searchable": true,
 				 "orderable": true,
 				 "targets": 0
 			 } ],
@@ -127,6 +127,10 @@
 		// $('#table_id').DataTable();
 		$(".btn-success").on("click",function(){
 		 	attr = $(this).parent().closest('tr').attr('data-val'); // getting the attribute
+		 	console.log();
+		 	$("#name_input").val($('.table-body').find('[data-val='+attr+'] td').eq(1).text());
+		 	$("#marks_input").val($('.table-body').find('[data-val='+attr+'] td').eq(2).text());
+		 	$("#roll_input").val($('.table-body').find('[data-val='+attr+'] td').eq(3).text());
 		});
 		$(".btn-danger").on("click",function(){
 			// $(this).parent().closest('tr').remove(); // removing row
@@ -140,6 +144,7 @@
 			$('.table-body').find('[data-val='+attr+'] td').eq(2).text($("#marks_input").val());
 			$('.table-body').find('[data-val='+attr+'] td').eq(3).text($("#roll_input").val());
 			e.target.reset();
+			$('#myModal').modal('hide');
 		});
 		var insert_serial = function(){
 			var len = $("#table_id tr").length;
